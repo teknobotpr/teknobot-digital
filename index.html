@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teknobot Digital — Digitalización para Restaurantes y Negocios en Puerto Rico</title>
+  <meta name="description" content="Menús digitales con QR, pedidos online con pago, integración POS, cámaras de seguridad. Soluciones reales para restaurantes y negocios en Puerto Rico. Ponce y toda la isla.">
+  <meta name="theme-color" content="#0a0a14">
+  <meta property="og:title" content="Teknobot Digital — Digitalización Real para tu Negocio">
+  <meta property="og:description" content="Menús digitales, pedidos online, cámaras IP, sistemas a la medida. Hecho en Puerto Rico, para Puerto Rico.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Reset & Base ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #0a0a14;
+      color: #e8e8f0;
+      line-height: 1.6;
+      overflow-x: hidden;
+      max-width: 100%;
+      -webkit-font-smoothing: antialiased;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    img, svg, video { max-width: 100%; height: auto; }
+
+    /* ===== Color tokens ===== */
+    :root {
+      --bg: #0a0a14;
+      --bg-soft: #12121f;
+      --bg-card: #1a1a2e;
+      --bg-card-hover: #22223a;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --text: #e8e8f0;
+      --text-dim: #9a9ab0;
+      --text-faint: #6a6a85;
+      --accent: #00d9a0;
+      --accent-dim: #00b384;
+      --accent-glow: rgba(0, 217, 160, 0.2);
+      --secondary: #7c3aed;
+      --warn: #fbbf24;
+      --pink: #ec4899;
+      --shadow-strong: 0 24px 60px rgba(0, 0, 0, 0.5);
+      --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ===== Background effects ===== */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(0, 217, 160, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 85% 70%, rgba(124, 58, 237, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 50% 100%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Subtle grid overlay */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky; top: 0;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(10, 10, 20, 0.7);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 14px 0;
+      width: 100%;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex; align-items: center; gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      min-width: 0;
+      flex-shrink: 1;
+    }
+    .logo span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    @media (max-width: 420px) {
+      .logo { font-size: 1.05rem; gap: 8px; }
+      .logo-mark { width: 30px; height: 30px; font-size: 0.95rem; }
+    }
+    @media (max-width: 360px) {
+      .logo span:last-child { font-size: 0.95rem; }
+    }
+    .logo-mark {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      display: grid; place-items: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #0a0a14;
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+    .nav-links {
+      display: flex; gap: 28px; align-items: center;
+    }
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent);
+      color: #0a0a14 !important;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: all 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-cta:hover {
+      background: #00ffb8;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px var(--accent-glow);
+    }
+    @media (max-width: 768px) {
+      .nav-links { gap: 12px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+    }
+    @media (max-width: 420px) {
+      .nav-cta { padding: 11px 14px; font-size: 0.9rem; }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 100px 0 56px;
+      text-align: center;
+      position: relative;
+    }
+    @media (max-width: 768px) { .hero { padding: 72px 0 48px; } }
+    @media (max-width: 480px) { .hero { padding: 56px 0 40px; } }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0, 217, 160, 0.1);
+      border: 1px solid rgba(0, 217, 160, 0.3);
+      color: var(--accent);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+    .badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--accent-glow); }
+      50% { opacity: 0.6; box-shadow: 0 0 0 8px transparent; }
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4.4rem;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #fff 0%, #b8b8d0 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      hyphens: auto;
+      max-width: 100%;
+    }
+    h1 br { display: none; }
+    @media (max-width: 1100px) { h1 { font-size: 4rem; } }
+    @media (max-width: 900px)  { h1 { font-size: 3.2rem; } }
+    @media (max-width: 700px)  { h1 { font-size: 2.6rem; } }
+    @media (max-width: 540px)  { h1 { font-size: 2.1rem; } }
+    @media (max-width: 420px)  { h1 { font-size: 1.85rem; line-height: 1.15; } }
+    @media (max-width: 360px)  { h1 { font-size: 1.65rem; } }
+    @media (min-width: 640px) { h1 br { display: inline; } }
+    h1 .accent {
+      background: linear-gradient(135deg, var(--accent) 0%, #00ffb8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 1.25rem;
+      color: var(--text-dim);
+      max-width: 680px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+      overflow-wrap: break-word;
+    }
+    @media (max-width: 768px) { .hero-sub { font-size: 1.05rem; } }
+    @media (max-width: 420px) { .hero-sub { font-size: 0.98rem; } }
+    .hero-cta {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 26px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      min-height: 48px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      font-family: inherit;
+      max-width: 100%;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0a14;
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      background: #00ffb8;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px var(--accent-glow);
+    }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      border: 1.5px solid rgba(0, 217, 160, 0.35);
+    }
+    .btn-ghost:hover {
+      background: rgba(0, 217, 160, 0.08);
+      border-color: rgba(0, 217, 160, 0.6);
+    }
+    .hero-trust {
+      margin-top: clamp(36px, 6vw, 56px);
+      display: flex; gap: 14px 28px; justify-content: center; flex-wrap: wrap;
+      color: var(--text-faint);
+      font-size: 0.9rem;
+      padding: 0 8px;
+    }
+    .hero-trust span {
+      display: inline-flex; align-items: center; gap: 8px;
+      white-space: nowrap;
+    }
+    @media (max-width: 480px) {
+      .hero-trust {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.85rem;
+      }
+    }
+    .hero-trust span::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      padding: 80px 0;
+      position: relative;
+    }
+    @media (max-width: 768px) { section { padding: 64px 0; } }
+    @media (max-width: 480px) { section { padding: 56px 0; } }
+    /* Tighter gap between hero and first section on desktop */
+    @media (min-width: 769px) {
+      .hero { padding-bottom: 24px; }
+      #servicios { padding-top: 48px; }
+    }
+    .section-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 60px;
+    }
+    @media (max-width: 768px) { .section-head { margin: 0 auto 44px; } }
+    .section-eyebrow {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      color: var(--text);
+      overflow-wrap: break-word;
+    }
+    @media (max-width: 900px) { h2 { font-size: 2.2rem; } }
+    @media (max-width: 640px) { h2 { font-size: 1.8rem; } }
+    @media (max-width: 420px) { h2 { font-size: 1.5rem; } }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      overflow-wrap: break-word;
+    }
+    @media (max-width: 420px) { .section-sub { font-size: 0.95rem; } }
+
+    /* ===== SERVICES GRID ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: 20px;
+    }
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      min-width: 0;
+    }
+    @media (max-width: 480px) { .service-card { padding: 24px 22px; } }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--secondary));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .service-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-strong);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: rgba(0, 217, 160, 0.1);
+      display: grid; place-items: center;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+    .service-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .service-card p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .service-tag {
+      display: inline-block;
+      background: rgba(124, 58, 237, 0.15);
+      color: #b794ff;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 14px;
+    }
+
+    /* ===== PORTFOLIO ===== */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: 20px;
+    }
+    .portfolio-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      min-width: 0;
+    }
+    .portfolio-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0, 217, 160, 0.15);
+    }
+    .portfolio-thumb {
+      height: 180px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #22223a 100%);
+      position: relative;
+      overflow: hidden;
+      display: grid; place-items: center;
+      font-size: 3rem;
+    }
+    .portfolio-thumb.coqui {
+      background: linear-gradient(135deg, #1e3a2f 0%, #0d2a1f 100%);
+    }
+    .portfolio-thumb.cordillera {
+      background: linear-gradient(135deg, #3d2e1f 0%, #1f1810 100%);
+    }
+    .portfolio-thumb.volcan {
+      background: linear-gradient(135deg, #3d1f2f 0%, #2a1020 100%);
+    }
+    .portfolio-thumb.cotizador {
+      background: linear-gradient(135deg, #1f2a3d 0%, #10182a 100%);
+    }
+    .portfolio-info {
+      padding: 22px 24px;
+    }
+    .portfolio-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .portfolio-info .tag {
+      color: var(--text-faint);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .portfolio-info p {
+      color: var(--text-dim);
+      font-size: 0.93rem;
+    }
+    .portfolio-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin-top: 14px;
+    }
+
+    /* ===== PRICING ===== */
+    #pricing, #paquetes { background: rgba(255, 255, 255, 0.02); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 28px;
+      transition: all 0.3s;
+      position: relative;
+      display: flex; flex-direction: column;
+      min-width: 0;
+    }
+    @media (max-width: 480px) { .pricing-card { padding: 28px 22px; } }
+    .pricing-card.featured {
+      border-color: var(--accent);
+      background: linear-gradient(180deg, rgba(0, 217, 160, 0.04) 0%, var(--bg-card) 100%);
+      transform: scale(1.02);
+    }
+    @media (max-width: 768px) {
+      .pricing-card.featured { transform: none; }
+    }
+    .pricing-badge {
+      position: absolute; top: -12px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #0a0a14;
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .pricing-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .pricing-tagline {
+      color: var(--text-faint);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      min-height: 40px;
+    }
+    .pricing-amount {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .pricing-amount .currency {
+      font-size: 1.2rem;
+      color: var(--text-dim);
+      margin-right: 4px;
+    }
+    .pricing-period {
+      color: var(--text-faint);
+      font-size: 0.85rem;
+      margin-bottom: 28px;
+    }
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 28px;
+      flex-grow: 1;
+    }
+    .pricing-features li {
+      padding: 9px 0;
+      color: var(--text-dim);
+      font-size: 0.94rem;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .pricing-card .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: 20px;
+    }
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+    }
+    .testimonial-quote {
+      color: var(--text);
+      font-size: 0.98rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .testimonial-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      display: grid; place-items: center;
+      font-weight: 700;
+      color: #0a0a14;
+      flex-shrink: 0;
+    }
+    .testimonial-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .testimonial-role {
+      color: var(--text-faint);
+      font-size: 0.85rem;
+    }
+    .testimonial-placeholder {
+      opacity: 0.45;
+      border-style: dashed;
+    }
+
+    /* ===== CONTACT ===== */
+    #contacto {
+      background: linear-gradient(180deg, transparent 0%, rgba(0, 217, 160, 0.04) 100%);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .contact-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+    .contact-info > p {
+      color: var(--text-dim);
+      margin-bottom: 32px;
+    }
+    .contact-method {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+      min-width: 0;
+      word-break: break-word;
+    }
+    .contact-method:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+    .contact-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(0, 217, 160, 0.1);
+      display: grid; place-items: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .contact-label {
+      color: var(--text-faint);
+      font-size: 0.82rem;
+      margin-bottom: 2px;
+    }
+    .contact-value {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Form */
+    form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      min-width: 0;
+    }
+    @media (max-width: 480px) { form { padding: 22px 20px; } }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    form .btn {
+      width: 100%;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-faint);
+      font-size: 0.9rem;
+    }
+    footer .footer-brand {
+      font-weight: 600;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+
+    /* WhatsApp float button */
+    .wa-float {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: #25d366;
+      display: grid; place-items: center;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+      z-index: 50;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+    .wa-float svg {
+      width: 30px; height: 30px;
+      fill: white;
+    }
+    @media (max-width: 480px) {
+      .wa-float {
+        bottom: 16px; right: 16px;
+        width: 52px; height: 52px;
+      }
+      .wa-float svg { width: 26px; height: 26px; }
+    }
+
+    /* ===== Reveal animation =====
+       Default: visible (progressive enhancement / no-JS / screenshot-safe).
+       JS adds .reveal-init to enable the hidden initial state, then observer adds .in. */
+    .reveal { opacity: 1; transform: none; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .reveal-init .reveal { opacity: 0; transform: translateY(20px); }
+    .reveal-init .reveal.in { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-init .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-mark">T</span>
+        <span>Teknobot Digital</span>
+      </a>
+      <div class="nav-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#portafolio">Portafolio</a>
+        <a href="#paquetes">Paquetes</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#contacto" class="nav-cta">Cotizar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Aceptando nuevos proyectos · 2026
+      </div>
+      <h1>Digitaliza tu Restaurante o Negocio<br> <span class="accent">en Puerto Rico</span>.</h1>
+      <p class="hero-sub">
+        Menús digitales con QR, pedidos online con pago, cotizadores a la medida e
+        instalación de cámaras de seguridad. Soluciones de verdad, hechas en la isla,
+        para negocios de la isla.
+      </p>
+      <div class="hero-cta">
+        <a href="#contacto" class="btn btn-primary">
+          Cotizar mi proyecto
+          <span>→</span>
+        </a>
+        <a href="#portafolio" class="btn btn-ghost">
+          Ver demos en vivo
+        </a>
+      </div>
+      <div class="hero-trust">
+        <span>10+ años en IT y seguridad</span>
+        <span>Bilingüe EN/ES</span>
+        <span>Hecho en Ponce, PR</span>
+        <span>Pagos seguros con Stripe</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SERVICES -->
+  <section id="servicios">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">Servicios</div>
+        <h2>Tecnología que sí mueve la aguja.</h2>
+        <p class="section-sub">No es "otro web bonito". Es operación digital que ahorra tiempo, abre canales nuevos y te deja competir con cualquiera.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">🍽️</div>
+          <h3>Menú Digital + Pedidos</h3>
+          <p>QR para tu mesa, menú profesional en celular, pedidos por WhatsApp o pago con tarjeta online. El cliente arma su orden, tú la recibes lista para preparar.</p>
+          <span class="service-tag">Restaurantes</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">📋</div>
+          <h3>Cotizador a la Medida</h3>
+          <p>Sistema web para crear cotizaciones en 2 minutos. Catálogo, clientes, PDFs con tu logo, envío por email o WhatsApp. Sin más Excel.</p>
+          <span class="service-tag">PYMEs · Servicios</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">💳</div>
+          <h3>Integración POS</h3>
+          <p>Conecto tu Clover o Square con tu web, dashboards e inventario. Una sola fuente de verdad para órdenes online y presenciales.</p>
+          <span class="service-tag">Comercio · Restaurantes</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">📹</div>
+          <h3>Cámaras de Seguridad</h3>
+          <p>Instalación profesional de cámaras IP, monitoreo remoto por celular, integración con sistemas existentes. Servicio físico en toda la isla.</p>
+          <span class="service-tag">Hogar · Negocio</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">⚡</div>
+          <h3>Setup Digital Completo</h3>
+          <p>Dominio, email profesional, landing, Google Business, WhatsApp Business. Tu negocio listo digitalmente en una semana.</p>
+          <span class="service-tag">Negocios nuevos</span>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🛠️</div>
+          <h3>Mantenimiento Mensual</h3>
+          <p>Para que tu sistema siga funcionando sin que te tengas que preocupar. Backups, soporte WhatsApp, cambios incluidos.</p>
+          <span class="service-tag">Recurrente</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portafolio">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">Portafolio</div>
+        <h2>Proyectos en vivo. Tócalos tú.</h2>
+        <p class="section-sub">No demos de catálogo — sitios funcionando con clientes reales en Puerto Rico. Abre y prueba.</p>
+      </div>
+      <div class="portfolio-grid">
+        <a href="https://teknobotpr.github.io/demo-menu/" target="_blank" rel="noopener" class="portfolio-card reveal">
+          <div class="portfolio-thumb coqui">🌴</div>
+          <div class="portfolio-info">
+            <h3>El Coquí Bistró</h3>
+            <div class="tag">Restaurante · Bistró elegante</div>
+            <p>Menú digital con pedidos online, pagos con tarjeta y dashboard de órdenes para el dueño.</p>
+            <span class="portfolio-link">Ver demo en vivo →</span>
+          </div>
+        </a>
+        <a href="https://teknobotpr.github.io/demo-menu-2/" target="_blank" rel="noopener" class="portfolio-card reveal">
+          <div class="portfolio-thumb cordillera">☕</div>
+          <div class="portfolio-info">
+            <h3>Café Cordillera</h3>
+            <div class="tag">Cafetería · Montaña</div>
+            <p>Menú QR para café de altura, diseño rústico-moderno, pedidos por WhatsApp con detalle por mesa.</p>
+            <span class="portfolio-link">Ver demo en vivo →</span>
+          </div>
+        </a>
+        <a href="https://teknobotpr.github.io/demo-menu-3/" target="_blank" rel="noopener" class="portfolio-card reveal">
+          <div class="portfolio-thumb volcan">🌋</div>
+          <div class="portfolio-info">
+            <h3>Tacos El Volcán</h3>
+            <div class="tag">Food truck · Mexicana</div>
+            <p>Branding vibrante, navegación por categorías, pickup y ubicación dinámica del food truck.</p>
+            <span class="portfolio-link">Ver demo en vivo →</span>
+          </div>
+        </a>
+        <a href="https://teknobotpr.github.io/teknobot-cotizaciones/" target="_blank" rel="noopener" class="portfolio-card reveal">
+          <div class="portfolio-thumb cotizador">📋</div>
+          <div class="portfolio-info">
+            <h3>Cotizador Teknobot</h3>
+            <div class="tag">Software interno · Supabase</div>
+            <p>El cotizador que uso a diario para mi negocio de cámaras. Clientes, productos, PDFs automáticos.</p>
+            <span class="portfolio-link">Ver demo en vivo →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="paquetes">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">Paquetes Restaurante</div>
+        <h2>Pricing transparente. Sin sorpresas.</h2>
+        <p class="section-sub">Tres tiers diseñados para el mercado real de Puerto Rico. Pagas 50% al iniciar, 50% al entregar.</p>
+      </div>
+      <div class="pricing-grid">
+        <!-- Básico -->
+        <div class="pricing-card reveal">
+          <div class="pricing-name">Básico</div>
+          <div class="pricing-tagline">Menú digital + pedidos por WhatsApp</div>
+          <div class="pricing-amount"><span class="currency">$</span>750</div>
+          <div class="pricing-period">Entrega en 5–7 días · Mantenimiento desde $30/mes</div>
+          <ul class="pricing-features">
+            <li>Menú digital responsivo</li>
+            <li>QR imprimible para mesas</li>
+            <li>Hasta 40 productos</li>
+            <li>Pedidos por WhatsApp</li>
+            <li>Hosting incluido primer año</li>
+            <li>Capacitación 30 min</li>
+          </ul>
+          <a href="#contacto" class="btn btn-ghost">Cotizar este paquete</a>
+        </div>
+
+        <!-- Profesional (featured) -->
+        <div class="pricing-card featured reveal">
+          <div class="pricing-badge">Más popular</div>
+          <div class="pricing-name">Profesional</div>
+          <div class="pricing-tagline">Menú + pedidos online + pago + dashboard</div>
+          <div class="pricing-amount"><span class="currency">$</span>1,800</div>
+          <div class="pricing-period">Entrega en 14–18 días · Mantenimiento desde $45/mes</div>
+          <ul class="pricing-features">
+            <li>Todo lo del Básico</li>
+            <li>Pagos online (Stripe)</li>
+            <li>Carrito + variantes y extras</li>
+            <li>Dashboard de órdenes en vivo</li>
+            <li>Notificación email + WhatsApp</li>
+            <li>Hasta 100 productos</li>
+            <li>Capacitación 1.5 horas</li>
+          </ul>
+          <a href="#contacto" class="btn btn-primary">Cotizar este paquete</a>
+        </div>
+
+        <!-- Premium -->
+        <div class="pricing-card reveal">
+          <div class="pricing-name">Premium</div>
+          <div class="pricing-tagline">Solución completa con POS + loyalty</div>
+          <div class="pricing-amount"><span class="currency">$</span>4,200</div>
+          <div class="pricing-period">Entrega en 25–35 días · Mantenimiento desde $80/mes</div>
+          <ul class="pricing-features">
+            <li>Todo lo del Profesional</li>
+            <li>Integración Clover POS</li>
+            <li>Branding 100% custom</li>
+            <li>Dominio + email propios</li>
+            <li>Programa de lealtad</li>
+            <li>Cuentas de cliente + favoritos</li>
+            <li>Capacitación 3 hrs presencial</li>
+          </ul>
+          <a href="#contacto" class="btn btn-ghost">Cotizar este paquete</a>
+        </div>
+      </div>
+      <p style="text-align:center; color: var(--text-faint); margin-top: 32px; font-size: 0.9rem;">
+        ¿Tu negocio no es restaurante? También cotizo cotizadores, integraciones, cámaras y soluciones a la medida.
+        <a href="#contacto" style="color: var(--accent);">Hablemos</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonios">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">Testimonios</div>
+        <h2>Lo que dicen los clientes.</h2>
+      </div>
+      <div class="testimonials-grid">
+        <!-- Placeholder structure - llenar con testimonios reales después -->
+        <div class="testimonial-card testimonial-placeholder reveal">
+          <p class="testimonial-quote">"[Pega aquí el testimonio real del cliente. 2-3 oraciones máximo. Que mencione el problema antes y el resultado después.]"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">N</div>
+            <div>
+              <div class="testimonial-name">[Nombre cliente]</div>
+              <div class="testimonial-role">[Negocio · Ubicación]</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card testimonial-placeholder reveal">
+          <p class="testimonial-quote">"[Segundo testimonio. Si es bilingüe, déjalo en español. Si tienes uno en inglés también, ponlo aquí.]"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">N</div>
+            <div>
+              <div class="testimonial-name">[Nombre cliente]</div>
+              <div class="testimonial-role">[Negocio · Ubicación]</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card testimonial-placeholder reveal">
+          <p class="testimonial-quote">"[Tercer testimonio. Mejor si menciona números: 'aumentó pedidos 40%', 'me ahorró 2 horas al día', etc.]"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">N</div>
+            <div>
+              <div class="testimonial-name">[Nombre cliente]</div>
+              <div class="testimonial-role">[Negocio · Ubicación]</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contacto">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">Conversemos</div>
+        <h2>¿Listo para digitalizar tu negocio?</h2>
+        <p class="section-sub">Primera consulta gratis. Cotización en 24 horas. Te respondo personalmente.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h3>Tres formas de contactarme.</h3>
+          <p>Escoge la que te quede más cómoda. WhatsApp es la más rápida (te respondo en horas).</p>
+
+          <a href="https://wa.me/17879741793?text=Hola%20Reymil%2C%20vi%20Teknobot%20Digital%20y%20me%20interesa..." class="contact-method" target="_blank" rel="noopener">
+            <div class="contact-icon">💬</div>
+            <div>
+              <div class="contact-label">WhatsApp (más rápido)</div>
+              <div class="contact-value">+1 787 974 1793</div>
+            </div>
+          </a>
+
+          <a href="tel:+17879741793" class="contact-method">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-label">Teléfono</div>
+              <div class="contact-value">+1 787 974 1793</div>
+            </div>
+          </a>
+
+          <a href="mailto:teknobotpr@gmail.com" class="contact-method">
+            <div class="contact-icon">📧</div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">teknobotpr@gmail.com</div>
+            </div>
+          </a>
+
+          <div class="contact-method" style="cursor: default;">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-label">Base</div>
+              <div class="contact-value">Ponce, Puerto Rico · Servicio toda la isla</div>
+            </div>
+          </div>
+        </div>
+
+        <form id="contact-form" onsubmit="return handleContactSubmit(event)">
+          <div class="form-group">
+            <label for="nombre">Tu nombre</label>
+            <input type="text" id="nombre" required placeholder="María Pérez">
+          </div>
+          <div class="form-group">
+            <label for="negocio">Negocio</label>
+            <input type="text" id="negocio" required placeholder="El Coquí Bistró">
+          </div>
+          <div class="form-group">
+            <label for="contacto-form">WhatsApp o email</label>
+            <input type="text" id="contacto-form" required placeholder="787-555-1234 o tu@email.com">
+          </div>
+          <div class="form-group">
+            <label for="interes">¿Qué te interesa?</label>
+            <select id="interes" required>
+              <option value="">Selecciona...</option>
+              <option value="Básico">Paquete Básico ($750)</option>
+              <option value="Profesional">Paquete Profesional ($1,800)</option>
+              <option value="Premium">Paquete Premium ($4,200)</option>
+              <option value="Cotizador">Sistema de cotizaciones</option>
+              <option value="Cámaras">Cámaras de seguridad</option>
+              <option value="Otro">Otro / No estoy seguro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="mensaje">Cuéntame brevemente</label>
+            <textarea id="mensaje" placeholder="¿Cuántas órdenes manejas al día? ¿Tienes POS? Lo que sea que ayude..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Enviar mensaje
+            <span>→</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-brand">Teknobot Digital · Ponce, Puerto Rico</div>
+      <div>© 2026 · Hecho en la isla, para la isla. 🇵🇷</div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp floating button -->
+  <a href="https://wa.me/17879741793?text=Hola%20Reymil%2C%20vi%20Teknobot%20Digital%20y%20me%20interesa..." target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // Reveal on scroll (progressive enhancement)
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('reveal-init');
+      const reveals = document.querySelectorAll('.reveal');
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+      reveals.forEach(el => obs.observe(el));
+      // Safety net: if anything is still hidden after 4s (e.g. headless screenshots), reveal it.
+      setTimeout(() => {
+        document.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in'));
+      }, 4000);
+    }
+
+    // Contact form -> mailto (placeholder until backend wired up)
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const negocio = document.getElementById('negocio').value;
+      const contacto = document.getElementById('contacto-form').value;
+      const interes = document.getElementById('interes').value;
+      const mensaje = document.getElementById('mensaje').value;
+
+      const subject = encodeURIComponent(`Nuevo prospect: ${negocio} (${interes})`);
+      const body = encodeURIComponent(
+        `Nombre: ${nombre}\n` +
+        `Negocio: ${negocio}\n` +
+        `Contacto: ${contacto}\n` +
+        `Interés: ${interes}\n\n` +
+        `Mensaje:\n${mensaje}\n\n` +
+        `---\nEnviado desde teknobot.pr`
+      );
+      window.location.href = `mailto:teknobotpr@gmail.com?subject=${subject}&body=${body}`;
+      return false;
+    }
+  </script>
+</body>
+</html>
